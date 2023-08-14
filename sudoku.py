@@ -73,17 +73,17 @@ def reduce_puzzle(values):
 
 def search(values):
 
-    if values is False: #Sanity check for if it fails earlier
+    if values is False: #Sanity check for if it fails earlier. A false value would mean the grid is unsolvable
         return False 
     
-    if all(len(values[s]) == 1 for s in boxes): #Checks if it has been solved
+    if all(len(values[chosen_box]) == 1 for chosen_box in boxes): #Checks if it has been solved
         return values 
     
-    n,s = min((len(values[s]), s) for s in boxes if len(values[s]) > 1) #Chooses one of the unfilled squares with the minimal possibilities
+    fewest_possibilities, chosen_box = min((len(values[chosen_box]), chosen_box) for chosen_box in boxes if len(values[chosen_box]) > 1) #Chooses one of the unfilled squares with the minimal possibilities
    
-    for value in values[s]:  #Recursively creates a new sudoku and attempts at solving it
+    for value in values[chosen_box]:  #Recursively creates a new sudoku and attempts at solving it
         new_sudoku = values.copy()
-        new_sudoku[s] = value
+        new_sudoku[chosen_box] = value
         attempt = search(new_sudoku)
         if attempt:
             return attempt
