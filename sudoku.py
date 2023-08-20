@@ -88,4 +88,15 @@ def search(values):
         if attempt:
             return attempt
 
-print(search(reduce_puzzle(only_choice(eliminate(grid_values(second_grid))))))
+def display(values):
+
+    width = 1 + max(len(values[box]) for box in boxes)
+    line = '+'.join(['-' * (width *3 )] * 3)
+    for row in rows:
+        print(''.join(values[row + column].center(width)+('|' if column in '36' else '')
+                      for column in columns))
+        if row in 'CF': print(line)
+    print()
+
+#print(search(reduce_puzzle(only_choice(eliminate(grid_values(second_grid))))))
+display(search(reduce_puzzle(only_choice(eliminate(grid_values(second_grid))))))
